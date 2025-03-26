@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {AppBar,Box,Toolbar,Typography,InputBase} from '@mui/material';
-// import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-
-// import Typography from '@mui/material/Typography';
-// import InputBase from '@mui/material/InputBase';
-
 import SearchIcon from '@mui/icons-material/Search';
-
 import SelectorComponent from '../SelectorComponent';
+import { useDispatch ,useSelector} from 'react-redux';
+import { useEffect } from 'react';
+import { getAllGenres, getMoviesBySearch } from '../../api/movies';
+import {debounce} from 'lodash';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,12 +49,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  
 
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+
+    dispatch(getAllGenres())
+  },[dispatch])
+
+  const onSearchChange = debounce((e) => {
+    dispatch(getMoviesBySearch(e.target.value))
+  },500)
+
+
+  const { genres } = useSelector(state => state.movies)
+
+  console.log(genres)
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1}}>
+      <AppBar position="static" sx={{padding:1}}>
         <Toolbar>
          
           <Typography
@@ -68,7 +79,7 @@ export default function Navbar() {
           >
             Movies App
           </Typography>
-          <Search>
+          <Search onChange={onSearchChange}> 
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -80,8 +91,8 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
            
-            <SelectorComponent/>
-            <SelectorComponent/>
+            <SelectorComponent name ='Genres' value={genres}/>
+            <SelectorComponent name = 'Rating' value ={[]}/>
             
           </Box>
           
