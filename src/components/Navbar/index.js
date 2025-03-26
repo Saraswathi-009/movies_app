@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import {AppBar , Box , Toolbar , Typography , InputBase} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import SelectorComponent from './SelectorComponent';
+import {AppBar,Box,Toolbar,Typography,InputBase} from '@mui/material';
+// import Box from '@mui/material/Box';
+// import Toolbar from '@mui/material/Toolbar';
 
+// import Typography from '@mui/material/Typography';
+// import InputBase from '@mui/material/InputBase';
+
+import SearchIcon from '@mui/icons-material/Search';
+
+import SelectorComponent from '../SelectorComponent';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,12 +52,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          
+         
           <Typography
             variant="h6"
             noWrap
@@ -71,15 +79,15 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
+           
             <SelectorComponent/>
             <SelectorComponent/>
-
-
+            
           </Box>
-        
+          
         </Toolbar>
       </AppBar>
+
     </Box>
   );
 }
